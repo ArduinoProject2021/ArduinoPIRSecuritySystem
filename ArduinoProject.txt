@@ -1,0 +1,35 @@
+void setup()
+{
+  pinMode(8, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(10, OUTPUT);
+  pinMode(11, OUTPUT);
+  pinMode(3,INPUT);
+  pinMode(2,INPUT);
+  Serial.begin(9600);
+  
+}
+int switchPin = 2;
+int switchState = 0;
+
+void loop()
+{
+  switchState=digitalRead(2);
+  
+  
+  delay(10);
+   
+  if (switchState == HIGH )
+  {
+    digitalWrite(11, LOW);
+    digitalWrite(10, HIGH);
+  }
+    else
+
+  {
+    digitalWrite(10,LOW);
+    digitalWrite(11, HIGH);
+  }
+
+
+}
