@@ -1,21 +1,27 @@
 void setup()
 {
-  pinMode(8, OUTPUT);
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);
-  pinMode(11, OUTPUT);
-  pinMode(3,INPUT);
-  pinMode(2,INPUT);
-  Serial.begin(9600);
+  pinMode(8, OUTPUT); // piezo
+  pinMode(9, OUTPUT); // blue LED
+  pinMode(10, OUTPUT); // red LED
+  pinMode(11, OUTPUT); // yellow LED
+  pinMode(3,INPUT); // PIR
+  pinMode(2,INPUT); // slide switch
   
 }
-int switchPin = 2;
 int switchState = 0;
+int pirState = LOW;
+int YellowLed=11;
+int RedLed=10;
+int BlueLed=9;
+int Piezo=8;
+int Pir=3;
+int slideswithc=2;
+
 
 void loop()
 {
   switchState=digitalRead(2);
-  
+  pirState=digitalRead(3);
   
   delay(10);
    
@@ -23,10 +29,23 @@ void loop()
   {
     digitalWrite(11, LOW);
     digitalWrite(10, HIGH);
+
+    if(pirState==HIGH)
+    {
+      tone(8,150,20);
+      digitalWrite(9, HIGH);
+      delay(100);
+      digitalWrite(9,LOW);
+    }
+    else
+    {
+      digitalWrite(8,LOW);
+     digitalWrite(9,LOW); 
+    }
   }
     else
-
   {
+    digitalWrite(8,LOW);
     digitalWrite(10,LOW);
     digitalWrite(11, HIGH);
   }
