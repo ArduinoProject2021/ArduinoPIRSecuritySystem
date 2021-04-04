@@ -1,53 +1,95 @@
-void setup()
-{
-  pinMode(8, OUTPUT); // piezo
-  pinMode(9, OUTPUT); // blue LED
-  pinMode(10, OUTPUT); // red LED
-  pinMode(11, OUTPUT); // yellow LED
-  pinMode(3,INPUT); // PIR
-  pinMode(2,INPUT); // slide switch
-  
-}
-int switchState = 0;
-int pirState = LOW;
-int YellowLed=11;
-int RedLed=10;
-int BlueLed=9;
-int Piezo=8;
-int Pir=3;
-int slideswithc=2;
+#include<LiquidCrystal.h>
 
+int switchState = 0;
+int pir0State = LOW;
+int pir1State = LOW;
+
+int rsLcd=9;
+int eLcd=8;
+
+int db7Lcd=3;
+int db6Lcd=4;
+int db5Lcd=5;
+int db4Lcd=6;
+  
+int greenLed=13;
+int redLed=12;
+int blueLed=11;
+
+int piezo=10;
+
+int pir0=1;
+int pir1=2;
+
+int slideSwitch=0;
+
+LiquidCrystal lcd(rsLcd,eLcd,db4Lcd,db5Lcd,db6Lcd,db7Lcd);
+
+void setup()
+{  
+  pinMode(0,INPUT);// slide switch  
+  pinMode(1,INPUT); //PIR1
+  pinMode(2,INPUT); //PIR2
+
+  pinMode(10, OUTPUT); // piezo
+  pinMode(11, OUTPUT); // blue LED
+  pinMode(12, OUTPUT); // red LED
+  pinMode(13, OUTPUT); // Green LED
+  
+  lcd.begin(16,2);
+  lcd.setCursor(0,0);
+}
 
 void loop()
 {
-  switchState=digitalRead(2);
-  pirState=digitalRead(3);
+  
+  switchState=digitalRead(slideSwitch);
+  pir0State=digitalRead(pir0);
+  pir1State=digitalRead(pir1);
   
   delay(10);
    
   if (switchState == HIGH )
   {
-    digitalWrite(11, LOW);
-    digitalWrite(10, HIGH);
+   
+    lcd.print("System active!                               ");
+    lcd.clear();
+  
+    
+    digitalWrite(greenLed,LOW);
+    digitalWrite(redLed, HIGH);
 
-    if(pirState==HIGH)
+    if(pir0State==HIGH || pir1State==HIGH)
     {
-      tone(8,150,20);
-      digitalWrite(9, HIGH);
-      delay(100);
-      digitalWrite(9,LOW);
-    }
-    else
-    {
-      digitalWrite(8,LOW);
-     digitalWrite(9,LOW); 
+      if(pir0State==HIGH)
+      {
+        lcd.print("First sector");
+        tone(piezo,150,20);
+        digitalWrite(blueLed, HIGH);
+        delay(100);
+        digitalWrite(blueLed,LOW);
+      }
+      
+      if(pir1State == HIGH)
+      {
+       lcd.clear();
+       lcd.print("Second sector"); 
+       tone(piezo,300,20);
+       digitalWrite(blueLed, HIGH);
+       delay(100);
+       digitalWrite(blueLed,LOW);
+      }
     }
   }
     else
   {
-    digitalWrite(8,LOW);
-    digitalWrite(10,LOW);
-    digitalWrite(11, HIGH);
+    lcd.clear();
+    lcd.print("System inactive!                         ");
+    digitalWrite(blueLed,LOW);
+    delay(10);
+    digitalWrite(piezo,LOW);
+    digitalWrite(redLed,LOW);
+    digitalWrite(greenLed, HIGH);
   }
 
 
