@@ -1,5 +1,6 @@
 #include<LiquidCrystal.h>
 
+//Declearing all pins.
 int switchState = 0;
 int pir0State = LOW;
 int pir1State = LOW;
@@ -23,6 +24,7 @@ int pir1=2;
 
 int slideSwitch=0;
 
+//Decleared LCD
 LiquidCrystal lcd(rsLcd,eLcd,db4Lcd,db5Lcd,db6Lcd,db7Lcd);
 
 void setup()
@@ -49,27 +51,29 @@ void loop()
   
   delay(10);
    
+   //Check if system is active or not
   if (switchState == HIGH )
   {
    
-    lcd.print("System active!                               ");
+    lcd.print("System active!          ");
     lcd.clear();
-  
-    
+    delay(10);
     digitalWrite(greenLed,LOW);
     digitalWrite(redLed, HIGH);
 
     if(pir0State==HIGH || pir1State==HIGH)
     {
+	//Check if PIR1 is active
       if(pir0State==HIGH)
       {
+        lcd.clear();
         lcd.print("First sector");
-        tone(piezo,150,20);
+        tone(piezo,150,1000);
         digitalWrite(blueLed, HIGH);
         delay(100);
         digitalWrite(blueLed,LOW);
       }
-      
+    //Check if PIR2 is active
       if(pir1State == HIGH)
       {
        lcd.clear();
@@ -81,12 +85,13 @@ void loop()
       }
     }
   }
+  //Inactive system
     else
   {
     lcd.clear();
-    lcd.print("System inactive!                         ");
+    lcd.print("System inactive!     ");
     digitalWrite(blueLed,LOW);
-    delay(10);
+    delay(20);
     digitalWrite(piezo,LOW);
     digitalWrite(redLed,LOW);
     digitalWrite(greenLed, HIGH);
