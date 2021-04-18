@@ -9,4 +9,4 @@ Arduino PIR охранителна система.
 Когато системата засече движение в стаята тя подава звуков и светлинен сигнал чрез зумер и синьо LED. 
 
 
-https://www.tinkercad.com/things/8hTt8KHPU37-pirsecuritysystem/editel
+https://www.tinkercad.com/things/8hTt8KHPU37
